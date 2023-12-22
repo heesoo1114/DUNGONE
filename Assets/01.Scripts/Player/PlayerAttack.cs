@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -18,27 +19,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float shakeMagnitude = 10f;
     [SerializeField] private float shakeDuration = 0.3f;
 
-    #region Ammo
-
     [Header("Ammo")]
     [SerializeField] private int maxAmmo;
     [SerializeField] private float reloadDealtyTime = 2.3f;
-
+    [SerializeField] private TextMeshProUGUI _currentAmmoText;
     private int currentAmmo;
-    public int CurrentAmmo
-    {
-        get => currentAmmo;
-        set 
-        {
-            currentAmmo = value;
-            // TODO: UI UPDATE
-        }
-    }
     private bool isReloading;
 
-    #endregion
-
-    public bool CanShoot() => (currentAmmo > 0) & (!isReloading);
+    public bool IsCanShoot() => (currentAmmo > 0) & (!isReloading);
 
     private void Awake()
     {
@@ -51,18 +39,23 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        InitAmmo();
+        UpdateAmmo(maxAmmo);
     }
 
-    public void InitAmmo()
+    #region Ammo
+
+    private void UpdateAmmo(int newAmmo)
     {
-        currentAmmo = maxAmmo;
+        currentAmmo = newAmmo;
+        _currentAmmoText.text = currentAmmo.ToString() + " / " + maxAmmo;
     }
 
     public void UseAmmo()
     {
-        currentAmmo--;
+        UpdateAmmo(--currentAmmo);
     }
+
+    #endregion
 
     #region Shoot
 
@@ -70,7 +63,7 @@ public class PlayerAttack : MonoBehaviour
     public void TryShoot()
     {
         // 총알이 있는지 체크
-        if (!CanShoot())
+        if (!IsCanShoot())
         {
             Debug.Log("Not Enough Ammo");
             return;
@@ -158,8 +151,8 @@ public class PlayerAttack : MonoBehaviour
         _anim.PlayAnimation("reload");
         yield return new WaitForSeconds(reloadDealtyTime);
         _anim.StopAnimation("reload");
-        
-        currentAmmo = maxAmmo;
+
+        UpdateAmmo(maxAmmo);
         isReloading = false;
     }
 

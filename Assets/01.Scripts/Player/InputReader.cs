@@ -18,7 +18,7 @@ public class InputReader : ScriptableObject, IPlayerInputActions
     public Action EndAimEvent;
 
     public Action FastMoveEvent;
-    public Action SlowMoveEvent;
+    public Action InitMoveEvent;
 
     #region Setting
 
@@ -93,7 +93,7 @@ public class InputReader : ScriptableObject, IPlayerInputActions
         }
         else if (context.canceled)
         {
-            SlowMoveEvent?.Invoke();
+            InitMoveEvent?.Invoke();
         }
     }
 

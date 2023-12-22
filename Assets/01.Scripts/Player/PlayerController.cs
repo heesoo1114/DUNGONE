@@ -24,15 +24,16 @@ public class PlayerController : MonoBehaviour
         // Input
         _inputReader.MovementEvent += _playerMovement.SetMovement;
         _inputReader.FastMoveEvent += _playerMovement.SetFastMovement;
-        _inputReader.SlowMoveEvent += _playerMovement.SetNormalMovement;
+        _inputReader.InitMoveEvent += _playerMovement.SetNormalMovement;
         
         _inputReader.ShootEvent += _playerAttack.TryShoot;
         _inputReader.ReloadEvent += _playerAttack.TryReload;
 
         _inputReader.LookEvent += _playerLook.SetMousePos;
         _inputReader.StartAimEvent += _playerLook.StartAimMode;
+        _inputReader.StartAimEvent += _playerMovement.SetSlowMovement;
         _inputReader.EndAimEvent += _playerLook.EndAimMode;
-
+        _inputReader.EndAimEvent += _playerMovement.SetNormalMovement;
 
         // 입력 활성화
         _inputReader.ActivateInput();
@@ -42,14 +43,16 @@ public class PlayerController : MonoBehaviour
     {
         _inputReader.MovementEvent -= _playerMovement.SetMovement;
         _inputReader.FastMoveEvent -= _playerMovement.SetFastMovement;
-        _inputReader.SlowMoveEvent -= _playerMovement.SetNormalMovement;
+        _inputReader.InitMoveEvent -= _playerMovement.SetNormalMovement;
 
         _inputReader.ShootEvent -= _playerAttack.TryShoot;
         _inputReader.ReloadEvent -= _playerAttack.TryReload;
 
         _inputReader.LookEvent -= _playerLook.SetMousePos;
         _inputReader.StartAimEvent -= _playerLook.StartAimMode;
+        _inputReader.StartAimEvent -= _playerMovement.SetSlowMovement;
         _inputReader.EndAimEvent -= _playerLook.EndAimMode;
+        _inputReader.EndAimEvent -= _playerMovement.SetNormalMovement;
 
         _inputReader.DeactivateInput();
     }

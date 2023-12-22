@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("MovementValue")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float fastMoveSpeed = 8f;
+    [SerializeField] private float slowMoveSpeed = 3f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float gravity = -9.8f;
     [SerializeField] private float gravityMultiplier = 1f;
@@ -54,6 +55,15 @@ public class PlayerMovement : MonoBehaviour
             StopCoroutine(speedChangeCor);
         }
         speedChangeCor = StartCoroutine(LerpSpeedCor(fastMoveSpeed, speedLerpChangeSpeed));
+    }
+
+    public void SetSlowMovement()
+    {
+        if (speedChangeCor != null)
+        {
+            StopCoroutine(speedChangeCor);
+        }
+        speedChangeCor = StartCoroutine(LerpSpeedCor(slowMoveSpeed, speedLerpChangeSpeed));
     }
 
     public void SetNormalMovement()
