@@ -4,6 +4,7 @@ using TMPro;
 
 public class PlayerAttack : MonoBehaviour
 {
+    private PlayerController _playerController;
     private PlayerAnimator _anim;
     private CameraController _camController;
 
@@ -26,12 +27,14 @@ public class PlayerAttack : MonoBehaviour
     private int currentAmmo;
     private bool isReloading;
 
+    public bool IsShooting { get; private set; }
     public bool IsCanShoot() => (currentAmmo > 0) & (!isReloading);
 
     private void Awake()
     {
         _anim = GetComponent<PlayerAnimator>();
         _camController = Camera.main.GetComponent<CameraController>();
+        _playerController = GetComponent<PlayerController>();
 
         hitableLayer = LayerMask.GetMask("Enemy", "GroundAndWall");
         enemyLayer = LayerMask.GetMask("Enemy");
@@ -69,6 +72,8 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
+        IsShooting = true;
+
         ShootFeedback();
         UseAmmo();
 
@@ -86,6 +91,8 @@ public class PlayerAttack : MonoBehaviour
                 FailedHit(hit);
             }
         }
+
+        IsShooting = false;
     }
 
     private void ShootFeedback()

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
+    private PlayerController _playerController;
     private PlayerAnimator _anim;
 
     // cam
@@ -22,11 +23,14 @@ public class PlayerLook : MonoBehaviour
     [Header("Component")]
     [SerializeField] private Transform camPos; // pelvis -> spine 1, 2, 3 -> neck -> head
 
+    private bool CanZoomIn => (false == _playerController.IsShooting) && (false == _playerController.IsMoving);
+
     private void Awake()
     {
         _mainCam = Camera.main;
         _camController = _mainCam.gameObject.GetComponent<CameraController>();
         _anim = GetComponent<PlayerAnimator>();
+        _playerController = GetComponent<PlayerController>();
     }
 
     private void LateUpdate()
@@ -42,6 +46,8 @@ public class PlayerLook : MonoBehaviour
 
         _mainCam.transform.rotation = targetDir;
         _mainCam.transform.position = camPos.position;
+
+        // print(_playerController.IsShooting + " " + _playerController.IsMoving);
     }
 
     public void SetMousePos(Vector2 value)
@@ -54,8 +60,11 @@ public class PlayerLook : MonoBehaviour
 
     public void StartAimMode()
     {
-        _camController.ZoomIn();
-        _anim.PlayAnimation("aim");
+        if (CanZoomIn)
+        {
+            _camController.ZoomIn();
+            _anim.PlayAnimation("aim");
+        }
     }
 
     public void EndAimMode()

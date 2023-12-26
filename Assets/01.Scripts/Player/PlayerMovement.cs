@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PlayerController _playerController;
     private CharacterController _characterController;
     private PlayerAnimator _anim;
 
@@ -31,12 +31,14 @@ public class PlayerMovement : MonoBehaviour
     public bool IsMoveInputIn => _movementVelocity != Vector3.zero;
     public bool ActiveMove { get; private set; } = true;
 
-    private bool isMoving = false;
+    public bool IsMoving { get; private set; } = false;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _anim = GetComponent<PlayerAnimator>();
+        _playerController = GetComponent<PlayerController>();
+
         _rootTrm = transform;
         initMoveSpeed = moveSpeed;
     }
@@ -104,16 +106,16 @@ public class PlayerMovement : MonoBehaviour
     {
         _movementVelocity = (_rootTrm.forward * _inputDirection.y + _rootTrm.right * _inputDirection.x) * moveSpeed * Time.fixedDeltaTime;
 
-        if (IsMoveInputIn && !isMoving)
+        if (IsMoveInputIn && !IsMoving)
         {
             // _anim.SetBlendValue(moveSpeed);
             _anim.PlayAnimation("move");
-            isMoving = true;    
+            IsMoving = true;    
         }
-        else if (!IsMoveInputIn && isMoving)
+        else if (!IsMoveInputIn && IsMoving)
         {
             _anim.StopAnimation("move");
-            isMoving = false;
+            IsMoving = false;
         }
     }
 

@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     private Coroutine aimChangeCor;
     private float initAimValue = 60f;
     private float targetAimvalue = 50f;
-
+    public bool IsAiming => aimChangeCor != null;
 
     // recoil
     // public Vector3 recoilOffset { get; private set; }
