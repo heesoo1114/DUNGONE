@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsMoving { get; private set; } = false;
 
+    private bool CanFastMove => (false == _playerController.IsAiming) && (false == _playerController.IsShooting);
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -52,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetFastMovement()
     {
+        if (false == CanFastMove) return;
+
         if (speedChangeCor != null)
         {
             StopCoroutine(speedChangeCor);

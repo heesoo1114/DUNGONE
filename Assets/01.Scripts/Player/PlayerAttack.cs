@@ -28,7 +28,15 @@ public class PlayerAttack : MonoBehaviour
     private bool isReloading;
 
     public bool IsShooting { get; private set; }
-    public bool IsCanShoot() => (currentAmmo > 0) & (!isReloading);
+    public bool CanShoot()
+    {
+        print(_playerController.IsAiming + " " + _playerController.IsMoving);
+        if (false == _playerController.IsAiming && true == _playerController.IsMoving)
+        {
+            return false;   
+        }
+        return (currentAmmo > 0) & (!isReloading);
+    }
 
     private void Awake()
     {
@@ -66,11 +74,7 @@ public class PlayerAttack : MonoBehaviour
     public void TryShoot()
     {
         // 총알이 있는지 체크
-        if (!IsCanShoot())
-        {
-            Debug.Log("Not Enough Ammo");
-            return;
-        }
+        if (false == CanShoot()) return;
 
         IsShooting = true;
 

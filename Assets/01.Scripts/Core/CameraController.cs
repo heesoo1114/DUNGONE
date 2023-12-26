@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     private Coroutine aimChangeCor;
     private float initAimValue = 60f;
     private float targetAimvalue = 50f;
-    public bool IsAiming => aimChangeCor != null;
+    public bool IsAiming { get; private set; }
 
     // recoil
     // public Vector3 recoilOffset { get; private set; }
@@ -26,6 +26,11 @@ public class CameraController : MonoBehaviour
     {
         _mainCam = Camera.main; 
     }
+
+    /*private void LateUpdate()
+    {
+        print(IsAiming);
+    }*/
 
     #region Shake
 
@@ -57,6 +62,8 @@ public class CameraController : MonoBehaviour
     // Á¶ÁØ°æ
     public void ZoomIn()
     {
+        IsAiming = true;
+
         if (aimChangeCor != null)
         {
             StopCoroutine(aimChangeCor);
@@ -67,6 +74,8 @@ public class CameraController : MonoBehaviour
     // °ßÂø
     public void ZoomOut()
     {
+        IsAiming = false;
+        
         if (aimChangeCor != null)
         {
             StopCoroutine(aimChangeCor);
