@@ -14,7 +14,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         set
         {
             currentHp = value;
-            Debug.Log("Player is hurt");
 
             if (currentHp <= 0)
             {

@@ -132,7 +132,7 @@ Transform:
   m_Children:
   - {fileID: 7290660316683987821}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &5684494315139161364
 CharacterController:
@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   fastMoveSpeed: 8
+  slowMoveSpeed: 3
   jumpForce: 38
   gravity: -4
   gravityMultiplier: 1
@@ -254,6 +255,12 @@ MonoBehaviour:
   shakeDuration: 0.3
   maxAmmo: 30
   reloadDealtyTime: 2.3
+  _currentAmmoText: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 651699b548f6d8644b883abb41ec2887, type: 3}
+  reloadSound: {fileID: 8300000, guid: 778c7be53403f9e45804f5a61a13a3e6, type: 3}
+  notAmmoSound: {fileID: 8300000, guid: 0c187ee2790c74c4e9985aa1ee1a12d5, type: 3}
+  sucessfulHitSound: {fileID: 8300000, guid: 82fd1b9495a6b2045bbeabe4b7c168da, type: 3}
+  failHitSound: {fileID: 8300000, guid: 172f576bc4226094180d5993f9325d57, type: 3}
 --- !u!1001 &6573841274939019737
 PrefabInstance:
   m_ObjectHideFlags: 0

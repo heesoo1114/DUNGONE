@@ -4,6 +4,8 @@ using TMPro;
 
 public class PlayerAttack : MonoBehaviour
 {
+    #region Property
+
     private PlayerController _playerController;
     private PlayerAnimator _anim;
     private CameraController _camController;
@@ -27,16 +29,26 @@ public class PlayerAttack : MonoBehaviour
     private int currentAmmo;
     private bool isReloading;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private AudioClip reloadSound;
+    [SerializeField] private AudioClip notAmmoSound;
+    [SerializeField] private AudioClip sucessfulHitSound;
+    [SerializeField] private AudioClip failHitSound;
+
+    // bool
     public bool IsShooting { get; private set; }
     public bool CanShoot()
     {
-        print(_playerController.IsAiming + " " + _playerController.IsMoving);
+        // print(_playerController.IsAiming + " " + _playerController.IsMoving);
         if (false == _playerController.IsAiming && true == _playerController.IsMoving)
         {
             return false;   
         }
         return (currentAmmo > 0) & (!isReloading);
     }
+
+    #endregion
 
     private void Awake()
     {
@@ -74,7 +86,11 @@ public class PlayerAttack : MonoBehaviour
     public void TryShoot()
     {
         // 총알이 있는지 체크
-        if (false == CanShoot()) return;
+        if (false == CanShoot())
+        {
+            MakeSound(notAmmoSound);
+            return;
+        }
 
         IsShooting = true;
 
@@ -111,6 +127,9 @@ public class PlayerAttack : MonoBehaviour
 
         // Recoil (반동)
         _camController.ApplyRecoil(shakeMagnitude, shakeDuration);
+
+        // Sound
+        MakeSound(shootSound);
     }
 
     #endregion
@@ -123,6 +142,9 @@ public class PlayerAttack : MonoBehaviour
         // 적 피격 시 피 튀기는 이펙트 재생
         HitEffect bloodEffectClone = PoolManager.Instance.Pop("BloodEffect") as HitEffect;
         bloodEffectClone.SetPositionAndRotation(hit.point, hit.normal);
+
+        // 소리 재생
+        MakeSound(sucessfulHitSound);
 
         // hit에 저장된 피격 객체에 있는 IDamageAble 인터페이스 컴포넌트 가져와서 데미지 처리
         if (hit.collider.gameObject.TryGetComponent(out IDamageable damageableCmp))
@@ -137,6 +159,9 @@ public class PlayerAttack : MonoBehaviour
         // 충돌 시 총알 자국 이펙트 재생
         HitEffect conEffectClone = PoolManager.Instance.Pop("ConEffect") as HitEffect;
         conEffectClone.SetPositionAndRotation(hit.point, hit.normal);
+
+        // 소리 재생
+        MakeSound(failHitSound);
     }
 
     #endregion
@@ -145,10 +170,9 @@ public class PlayerAttack : MonoBehaviour
 
     public void TryReload()
     {
-        if (currentAmmo == maxAmmo)
+        if (currentAmmo == maxAmmo || true == isReloading)
         {
-            // TODO: Ammo 없는 애니메이션이나 사운드 재생
-            Debug.Log("Ammo is Enough");
+            // Debug.Log("Ammo is Enough");
             return;
         }
 
@@ -159,6 +183,8 @@ public class PlayerAttack : MonoBehaviour
     {
         isReloading = true;
 
+        MakeSound(reloadSound);
+
         _anim.PlayAnimation("reload");
         yield return new WaitForSeconds(reloadDealtyTime);
         _anim.StopAnimation("reload");
@@ -168,6 +194,12 @@ public class PlayerAttack : MonoBehaviour
     }
 
     #endregion
+
+    private void MakeSound(AudioClip clip)
+    {
+        AudioObj audioObjClone = PoolManager.Instance.Pop("AudioObj") as AudioObj;
+        audioObjClone.PlayClip(clip);
+    }
 
     private IEnumerator DelayCor()
     {
