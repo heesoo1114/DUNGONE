@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerController _playerController;
     private CharacterController _characterController;
     private PlayerAnimator _anim;
+    private PlayerWalkSound _walkSoundPlayer;
 
     private Transform _rootTrm;
 
@@ -40,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _anim = GetComponent<PlayerAnimator>();
         _playerController = GetComponent<PlayerController>();
+        _walkSoundPlayer = GetComponentInChildren<PlayerWalkSound>();
 
         _rootTrm = transform;
         initMoveSpeed = moveSpeed;
@@ -112,14 +115,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsMoveInputIn && !IsMoving)
         {
-            // _anim.SetBlendValue(moveSpeed);
             _anim.PlayAnimation("move");
-            IsMoving = true;    
+            IsMoving = true;
+
+            // 사운드 재생
+            _walkSoundPlayer.PlayWalkSound();
         }
         else if (!IsMoveInputIn && IsMoving)
         {
             _anim.StopAnimation("move");
             IsMoving = false;
+
+            // 사운드 정지
+            _walkSoundPlayer.StopWalkSound();
         }
     }
 

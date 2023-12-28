@@ -27,11 +27,6 @@ public class CameraController : MonoBehaviour
         _mainCam = Camera.main; 
     }
 
-    /*private void LateUpdate()
-    {
-        print(IsAiming);
-    }*/
-
     #region Shake
 
     public void ApplyRecoil(float magnitude, float duration)
