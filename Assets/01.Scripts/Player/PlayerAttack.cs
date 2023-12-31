@@ -28,6 +28,10 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentAmmoText;
     private int currentAmmo;
     private bool isReloading;
+    public bool CanReload()
+    {
+        return (currentAmmo != maxAmmo) && (false == isReloading) && (false == _playerController.IsMoving);
+    }
 
     [Header("Sound")]
     [SerializeField] private AudioClip shootSound;
@@ -45,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
         {
             return false;   
         }
-        return (currentAmmo > 0) & (!isReloading);
+        return (currentAmmo > 0) & (false == isReloading);
     }
 
     #endregion
@@ -170,9 +174,8 @@ public class PlayerAttack : MonoBehaviour
 
     public void TryReload()
     {
-        if (currentAmmo == maxAmmo || true == isReloading)
+        if (false == CanReload())
         {
-            // Debug.Log("Ammo is Enough");
             return;
         }
 

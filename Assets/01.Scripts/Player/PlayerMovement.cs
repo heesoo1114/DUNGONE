@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerController _playerController;
     private CharacterController _characterController;
     private PlayerAnimator _anim;
-    private PlayerWalkSound _walkSoundPlayer;
+    private PlayerWalkSound _playerWalkSound;
 
     private Transform _rootTrm;
 
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _anim = GetComponent<PlayerAnimator>();
         _playerController = GetComponent<PlayerController>();
-        _walkSoundPlayer = GetComponentInChildren<PlayerWalkSound>();
+        _playerWalkSound = GetComponentInChildren<PlayerWalkSound>();
 
         _rootTrm = transform;
         initMoveSpeed = moveSpeed;
@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
             IsMoving = true;
 
             // 사운드 재생
-            _walkSoundPlayer.PlayWalkSound();
+            _playerWalkSound.PlayWalkSound();
         }
         else if (!IsMoveInputIn && IsMoving)
         {
@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
             IsMoving = false;
 
             // 사운드 정지
-            _walkSoundPlayer.StopWalkSound();
+            _playerWalkSound.StopWalkSound();
         }
     }
 

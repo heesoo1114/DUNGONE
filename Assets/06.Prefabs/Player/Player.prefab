@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2769276473052561089}
   - component: {fileID: 5773716082202835593}
-  - component: {fileID: 7206140596876567046}
+  - component: {fileID: 8136125130366140975}
   m_Layer: 8
   m_Name: WalkSound
   m_TagString: Untagged
@@ -161,7 +161,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7206140596876567046
+--- !u!114 &8136125130366140975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -276,7 +276,7 @@ Transform:
   - {fileID: 7290660316683987821}
   - {fileID: 2769276473052561089}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &5684494315139161364
 CharacterController:
@@ -329,7 +329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35c85d771720d84f916101f390bc34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHealth: 100
+  hurtSound: {fileID: 8300000, guid: a0677703139829043a3b22517fd96102, type: 3}
+  dieSound: {fileID: 8300000, guid: 55f7a8bae3382e24e8e038385a4d4090, type: 3}
 --- !u!114 &7120949122813186938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +366,6 @@ MonoBehaviour:
   gravity: -4
   gravityMultiplier: 1
   speedLerpChangeSpeed: 1.5
-  _walkSoundPlayer: {fileID: 0}
 --- !u!114 &8579235773171031595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzleTr: {fileID: 7605762946958116637}
-  sendDamage: 1
+  sendDamage: 10
   shakeMagnitude: 15
   shakeDuration: 0.3
   maxAmmo: 30
@@ -404,8 +405,8 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: 651699b548f6d8644b883abb41ec2887, type: 3}
   reloadSound: {fileID: 8300000, guid: 778c7be53403f9e45804f5a61a13a3e6, type: 3}
   notAmmoSound: {fileID: 8300000, guid: 0c187ee2790c74c4e9985aa1ee1a12d5, type: 3}
-  sucessfulHitSound: {fileID: 8300000, guid: 82fd1b9495a6b2045bbeabe4b7c168da, type: 3}
-  failHitSound: {fileID: 8300000, guid: 172f576bc4226094180d5993f9325d57, type: 3}
+  sucessfulHitSound: {fileID: 8300000, guid: 5e17d09257fbc04469444cb4cfdee700, type: 3}
+  failHitSound: {fileID: 8300000, guid: 37e08e3552104a248a91d21d637ef2f4, type: 3}
 --- !u!1001 &6573841274939019737
 PrefabInstance:
   m_ObjectHideFlags: 0

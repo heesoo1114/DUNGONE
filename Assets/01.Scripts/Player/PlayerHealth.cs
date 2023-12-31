@@ -5,38 +5,43 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public Action playerDieEvent;
 
-    [SerializeField] private int maxHp;
-    private int currentHp; // 나중에 둘다 private로
+    [SerializeField] private int maxHealth = 100;
+    private int currentHealth; // 나중에 둘다 private로
+    public int CurrentHealth => currentHealth;
+    public bool IsLiving => (currentHealth > 0);
 
-    public int CurrentHP
-    {
-        get => currentHp;
-        set
-        {
-            currentHp = value;
-
-            if (currentHp <= 0)
-            {
-                playerDieEvent.Invoke();
-                Debug.Log("Player Die");
-            }
-        }
-    }
-
-    public bool IsLiving() => (currentHp > 0);
+    [Header("Sound")]
+    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private AudioClip dieSound;
 
     private void Start()
     {
-        InitHp();
-    }
-
-    public void InitHp()
-    {
-        currentHp = maxHp;
+        currentHealth = maxHealth;
     }
 
     public void OnDamage(int damage)
     {
-        currentHp -= damage;
+        currentHealth -= damage;
+
+        // ui update
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Player Die");
+            playerDieEvent.Invoke();
+            MakeSound(dieSound);
+
+            // 게임을 종료해야 한다.
+            return;
+        }
+
+        // hurt sound
+        MakeSound(hurtSound);
+    }
+
+    private void MakeSound(AudioClip clip)
+    {
+        AudioObj audioObjClone = PoolManager.Instance.Pop("AudioObj") as AudioObj;
+        audioObjClone.PlayClip(clip);
     }
 }
