@@ -967,6 +967,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1181386830947901624, guid: c4fdf3f899b9f474491fb5cb36146595, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4654210468188313958, guid: c4fdf3f899b9f474491fb5cb36146595, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5216001008576250684, guid: c4fdf3f899b9f474491fb5cb36146595, type: 3}
       propertyPath: _currentAmmoText
       value: 
