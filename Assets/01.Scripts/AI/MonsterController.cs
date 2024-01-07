@@ -6,14 +6,33 @@ public class MonsterController : MonoBehaviour, IDamageable
 {
     private StateMachine<MonsterController> thisStateMachine;
 
+    private Coroutine runningDelayCoroutine = null;
+
     #region Health
 
+    [Header("Health")]
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
     public int CurrentHealth => currentHealth;
-    public bool IsDead { get; private set; }
+    public bool IsAlive { get; private set; }
 
     #endregion
+
+    #region Dissolve
+
+    [Header("Effect")]
+    [SerializeField] private float dissolveAnimationSpeed = 2f;
+    private Material dissolveMaterial;
+    private float offDissolveValue = 0;
+    private float onDissolveValue = 1;
+
+    #endregion
+
+    private void Awake()
+    {
+        var renderer = GetComponentsInChildren<Renderer>();
+        dissolveMaterial = renderer[0].material;
+    }
 
     private void Start()
     {
@@ -23,7 +42,40 @@ public class MonsterController : MonoBehaviour, IDamageable
         thisStateMachine.AddStateList(new StateHurt());
         thisStateMachine.AddStateList(new StateDie());
 
+        IsAlive = true;
         currentHealth = maxHealth;
+    }
+
+    private void Update()
+    {
+        if (IsAlive)
+        {
+            thisStateMachine.Update(Time.deltaTime);
+        }
+    }
+
+    // damage
+    public void OnDamage(int damage)
+    {
+        currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
+        // ui update
+
+        if (currentHealth <= 0)
+        {
+            // die 
+            thisStateMachine.ChangeState<StateDie>();
+            IsAlive = false;
+        }
+        else
+        {
+            // hurt
+            thisStateMachine.ChangeState<StateHurt>();
+        }
+    }
+
+    public void OnDie()
+    {
+        StartCoroutine(DissolveCor(onDissolveValue, dissolveAnimationSpeed));
     }
 
     #region Conditions
@@ -71,29 +123,6 @@ public class MonsterController : MonoBehaviour, IDamageable
 
     #endregion
 
-    private void Update()
-    {
-        thisStateMachine.Update(Time.deltaTime);
-    }
-
-    // damage
-    public void OnDamage(int damage)
-    {
-        currentHealth -= damage;
-        // ui update
-
-        // hurt
-        thisStateMachine.ChangeState<StateHurt>();   
-
-        if (currentHealth <= 0)
-        {
-            IsDead = true;
-
-            // die 
-            thisStateMachine.ChangeState<StateDie>();
-        }
-    }
-
     #region Funcs
 
     public float GetAnimationClipLength(Animator _animator, string clipName)
@@ -115,17 +144,47 @@ public class MonsterController : MonoBehaviour, IDamageable
         return time;
     }
 
-    public void ActionLaterCoolTime(Action action, float coolTime)
+    public void ActionAfterCoolTime(Action action, float coolTime)
     {
-        Debug.Log(coolTime);
-        StopAllCoroutines();
-        StartCoroutine(CoolTimeCor(action, coolTime));
+        if (runningDelayCoroutine != null)
+        {
+            StopCoroutine(runningDelayCoroutine); 
+        }
+        runningDelayCoroutine = StartCoroutine(CoolTimeCor(action, coolTime));
     }
 
     private IEnumerator CoolTimeCor(Action action, float coolTime)
     {
         yield return new WaitForSeconds(coolTime);
+        runningDelayCoroutine = null;
         action();
+    }
+
+    private IEnumerator DissolveCor(float targetValue, float animSpeed)
+    {
+        float moveTime = 0f;
+        float timeValue = 0f;
+        float dissolveValue = 0f;
+        float endTimeValue = 1f / animSpeed;
+
+        while (true)
+        {
+            moveTime += Time.deltaTime;
+            timeValue = moveTime / animSpeed;
+
+            dissolveValue = Mathf.SmoothStep(dissolveValue, targetValue, timeValue);
+            dissolveMaterial.SetFloat("_Dissolve", dissolveValue);
+            
+            if (timeValue > endTimeValue)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        dissolveMaterial.SetFloat("_Dissolve", targetValue);
+        Destroy(gameObject);
     }
 
     #endregion              

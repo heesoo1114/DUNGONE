@@ -40,7 +40,7 @@ public class StateAttack : State<MonsterController>
         }
 
         // ÄðÅ¸ÀÓ
-        _stateMachineController.ActionLaterCoolTime(
+        _stateMachineController.ActionAfterCoolTime(
             () => _stateMachine.ChangeState<StateIdle>(), 
             attackCoolTime);
     }

@@ -92,13 +92,13 @@ public class CameraController : MonoBehaviour
 
             if (value > 0.9f)
             {
-                _mainCam.fieldOfView = targetValue;
                 break;
             }
 
             yield return null;
         }
 
+        _mainCam.fieldOfView = targetValue;
         aimChangeCor = null;
     }
 

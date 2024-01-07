@@ -41,7 +41,7 @@ public class StateMove : State<MonsterController>
 
     public override void OnExit()
     {
-        _animator?.SetBool(isMoveHash, false);
         _navMeshAgent.ResetPath();
+        _animator?.SetBool(isMoveHash, false);
     }
 }

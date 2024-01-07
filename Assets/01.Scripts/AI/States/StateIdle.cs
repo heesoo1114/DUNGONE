@@ -17,7 +17,6 @@ public class StateIdle : State<MonsterController>
 
     public override void OnUpdate(float deltaTime)
     {
-        Debug.Log("IdleState : OnUpdate");
         Transform target = _stateMachineController.SearchEnemy();
         if (target)
         {

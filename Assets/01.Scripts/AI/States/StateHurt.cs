@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
 public class StateHurt : State<MonsterController>
 {
@@ -11,6 +11,7 @@ public class StateHurt : State<MonsterController>
         _characterController = _stateMachineController.GetComponent<CharacterController>();
         _navMeshAgent = _stateMachineController.GetComponent<NavMeshAgent>();
         _animator = _stateMachineController.GetComponentInChildren<Animator>();
+        
         hurtAnimationClipLength = _stateMachineController.GetAnimationClipLength(_animator, "Damage");
     }
 
@@ -20,8 +21,9 @@ public class StateHurt : State<MonsterController>
 
         _navMeshAgent.velocity = Vector3.zero;
         _characterController.Move(Vector3.zero);
+
         _animator?.SetBool(isHurt, true);
-        _stateMachineController.ActionLaterCoolTime(                        
+        _stateMachineController.ActionAfterCoolTime(                        
             () => _stateMachine.ChangeState<StateIdle>(),
             hurtAnimationClipLength);
     }                                                                            
