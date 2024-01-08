@@ -5,6 +5,7 @@ public class UILookAtCamera : MonoBehaviour
     [SerializeField] private bool invert;
 
     private Vector3 camDir;
+    private Vector3 camPos;
     private Transform camTransform;
 
     private void Awake()
@@ -14,6 +15,10 @@ public class UILookAtCamera : MonoBehaviour
 
     private void OnEnable()
     {
+        if (invert)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
         LookCamera();
     }
 
@@ -24,14 +29,8 @@ public class UILookAtCamera : MonoBehaviour
 
     private void LookCamera()
     {
-        if (invert)
-        {
-            camDir = transform.position - camTransform.position;
-            transform.LookAt(transform.position + camDir.normalized);
-        }
-        else
-        {
-            transform.LookAt(camTransform);
-        }
+        camDir = transform.position - camTransform.position;
+        camDir.y = 0;
+        transform.LookAt(transform.position + camDir.normalized);
     }
 }

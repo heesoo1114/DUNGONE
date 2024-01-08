@@ -13,7 +13,7 @@ public class HealthBarUI : MonoBehaviour
 
     private void Awake()
     {
-        barRectTransfom = transform.GetChild(0).GetComponent<Transform>();
+        barRectTransfom = transform.GetChild(1).GetComponent<Transform>();
     }
 
     public void SetValue(float health)
@@ -37,8 +37,6 @@ public class HealthBarUI : MonoBehaviour
         float timeValue = 0f;
         float endTimeValue = 1 / animSpeed;
         Vector3 targetScaleVector = new Vector3(targetScaleX, 1, 1);
-
-        Debug.Log(targetScaleVector);
 
         while (true)
         {

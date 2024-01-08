@@ -17,7 +17,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     public int CurrentHealth => currentHealth;
     public bool IsAlive { get; private set; }
 
-    [SerializeField] private HealthBarUI _healthBarUI;
+    private HealthBarUI _healthBarUI;
 
     #endregion
 
@@ -35,6 +35,8 @@ public class MonsterController : MonoBehaviour, IDamageable
     {
         var renderer = GetComponentsInChildren<Renderer>();
         dissolveMaterial = renderer[0].material;
+
+        _healthBarUI = GetComponentInChildren<HealthBarUI>();
     }
 
     private void Start()
@@ -163,8 +165,8 @@ public class MonsterController : MonoBehaviour, IDamageable
     private IEnumerator CoolTimeCor(Action action, float coolTime)
     {
         yield return new WaitForSeconds(coolTime);
-        runningDelayCoroutine = null;
         action();
+        runningDelayCoroutine = null;
     }
 
     private IEnumerator DissolveCor(float targetValue, float animSpeed)
