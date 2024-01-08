@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // 체크포인트 만들기 (짧게 짧게)
-
     public static GameManager Instance = null;
+    public GameObject Player;
 
     [SerializeField] private PoolingListSO _poolingList;
 

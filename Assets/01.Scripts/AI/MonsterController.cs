@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEngine.Rendering;
 
 public class MonsterController : MonoBehaviour, IDamageable
 {
@@ -15,6 +16,8 @@ public class MonsterController : MonoBehaviour, IDamageable
     private int currentHealth;
     public int CurrentHealth => currentHealth;
     public bool IsAlive { get; private set; }
+
+    [SerializeField] private HealthBarUI _healthBarUI;
 
     #endregion
 
@@ -44,6 +47,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 
         IsAlive = true;
         currentHealth = maxHealth;
+        _healthBarUI.SetValue(currentHealth);
     }
 
     private void Update()
@@ -58,7 +62,9 @@ public class MonsterController : MonoBehaviour, IDamageable
     public void OnDamage(int damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
+
         // ui update
+        _healthBarUI.SetValue(currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -75,6 +81,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 
     public void OnDie()
     {
+        _healthBarUI.gameObject.SetActive(false);
         StartCoroutine(DissolveCor(onDissolveValue, dissolveAnimationSpeed));
     }
 
