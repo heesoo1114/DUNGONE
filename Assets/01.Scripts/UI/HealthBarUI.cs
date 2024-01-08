@@ -13,7 +13,7 @@ public class HealthBarUI : MonoBehaviour
 
     private void Awake()
     {
-        barRectTransfom = transform.Find("Bar").GetComponent<Transform>();
+        barRectTransfom = transform.GetChild(0).GetComponent<Transform>();
     }
 
     public void SetValue(float health)

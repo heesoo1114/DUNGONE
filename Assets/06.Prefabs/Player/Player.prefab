@@ -276,7 +276,7 @@ Transform:
   - {fileID: 7290660316683987821}
   - {fileID: 2769276473052561089}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &5684494315139161364
 CharacterController:
@@ -330,6 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  _healthBarUI: {fileID: 0}
   hurtSound: {fileID: 8300000, guid: a0677703139829043a3b22517fd96102, type: 3}
   dieSound: {fileID: 8300000, guid: 55f7a8bae3382e24e8e038385a4d4090, type: 3}
 --- !u!114 &7120949122813186938
