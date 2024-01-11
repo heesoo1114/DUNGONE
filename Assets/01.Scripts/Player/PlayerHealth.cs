@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private void Start()
     {
         currentHealth = maxHealth;
-        _healthBarUI.SetValue(currentHealth);
+        _healthBarUI.SettingRatio(maxHealth);
     }
 
     public void OnDamage(int damage)

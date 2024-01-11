@@ -8,6 +8,8 @@ public class HealthBarUI : MonoBehaviour
     private Coroutine scaleCoroutine = null;
 
     private float barValue = 1f;
+    public float MaxHealth { get; set; }
+    private float modulerValue;
 
     [SerializeField] private float scaleAnimaionSpeed = 0.75f;
 
@@ -16,9 +18,17 @@ public class HealthBarUI : MonoBehaviour
         barRectTransfom = transform.GetChild(1).GetComponent<Transform>();
     }
 
+    public void SettingRatio(float maxHealth)
+    {
+        MaxHealth = maxHealth;
+        modulerValue = 1 / MaxHealth;
+
+        SetValue(maxHealth);
+    }
+
     public void SetValue(float health)
     {
-        barValue = health * 0.01f;
+        barValue = health * modulerValue;
         UpdateBarUI(barValue);
     }
 

@@ -49,7 +49,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 
         IsAlive = true;
         currentHealth = maxHealth;
-        _healthBarUI.SetValue(currentHealth);
+        _healthBarUI.SettingRatio(maxHealth);
     }
 
     private void Update()
