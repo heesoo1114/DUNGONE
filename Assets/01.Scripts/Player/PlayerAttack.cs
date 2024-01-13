@@ -28,6 +28,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentAmmoText;
     private int currentAmmo;
     private bool isReloading;
+    public bool IsRealoding => isReloading;
     public bool CanReload()
     {
         return (currentAmmo != maxAmmo) && (false == isReloading) && (false == _playerController.IsMoving);
@@ -44,7 +45,6 @@ public class PlayerAttack : MonoBehaviour
     public bool IsShooting { get; private set; }
     public bool CanShoot()
     {
-        // print(_playerController.IsAiming + " " + _playerController.IsMoving);
         if (false == _playerController.IsAiming && true == _playerController.IsMoving)
         {
             return false;   

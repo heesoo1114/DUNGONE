@@ -23,7 +23,10 @@ public class PlayerLook : MonoBehaviour
     [Header("Component")]
     [SerializeField] private Transform camPos; // pelvis -> spine 1, 2, 3 -> neck -> head
 
-    private bool CanZoomIn => (false == _playerController.IsShooting) && (false == _playerController.IsMoving);
+    private bool CanZoomIn => 
+        (false == _playerController.IsShooting) && 
+        (false == _playerController.IsMoving) && 
+        (false == _playerController.IsReloading);
 
     private void Awake()
     {
@@ -33,21 +36,31 @@ public class PlayerLook : MonoBehaviour
         _playerController = GetComponent<PlayerController>();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         // rotation에서 x축이 상하회전, y축이 좌우회전임
         // 상하 회전 각도 제한 -> 플레이어 바디 상하좌우 회전
-        // 카메라 상하좌우 회전 -> 카메라 위치를 업데이트
+        // 카메라 반동 기준
 
         rotDir.x = Mathf.Clamp(rotDir.x, limitMinX, limitMaxX);
         targetDir = Quaternion.Euler(rotDir.x, rotDir.y, 0);
+        _camController.originalRotation = targetDir; 
+    }
 
+    private void LateUpdate()
+    {   
+        // 플레이어 Aim
         transform.rotation = targetDir;
 
-        _mainCam.transform.rotation = targetDir;
-        _mainCam.transform.position = camPos.position;
-
-        // print(_playerController.IsShooting + " " + _playerController.IsMoving);
+        // 카메라 상하좌우 회전 -> 카메라 위치를 업데이트
+        if (_camController.IsShaking)
+        {
+            _camController.UpdateCameraPositionRotation(camPos.position, null);
+        }
+        else
+        {
+            _camController.UpdateCameraPositionRotation(camPos.position, targetDir);
+        }
     }
 
     public void SetMousePos(Vector2 value)

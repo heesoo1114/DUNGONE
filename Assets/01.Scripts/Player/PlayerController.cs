@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public bool IsMoving => _playerMovement.IsMoving;
     public bool IsAiming => _cameraController.IsAiming;
     public bool IsShooting => _playerAttack.IsShooting;
+    public bool IsReloading => _playerAttack.IsRealoding;
 
     private void Awake()
     {

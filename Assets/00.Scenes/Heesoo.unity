@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimChangeAnimSpeed: 1
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!81 &366191755
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1372,11 +1373,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5216001008576250684, guid: c4fdf3f899b9f474491fb5cb36146595, type: 3}
       propertyPath: shakeDuration
-      value: 0.08
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5216001008576250684, guid: c4fdf3f899b9f474491fb5cb36146595, type: 3}
       propertyPath: shakeMagnitude
-      value: 3.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5216001008576250684, guid: c4fdf3f899b9f474491fb5cb36146595, type: 3}
       propertyPath: _currentAmmoText

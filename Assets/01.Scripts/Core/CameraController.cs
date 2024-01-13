@@ -27,6 +27,18 @@ public class CameraController : MonoBehaviour
         _mainCam = Camera.main; 
     }
 
+    public void UpdateCameraPositionRotation(Vector3? position = null, Quaternion? rotation = null)
+    {
+        if (position.HasValue)
+        {
+            _mainCam.transform.position = position.Value;
+        }
+        if (rotation.HasValue)
+        {
+            _mainCam.transform.rotation = rotation.Value;
+        }
+    }
+
     #region Shake
 
     public void ApplyRecoil(float magnitude, float duration)
@@ -34,21 +46,34 @@ public class CameraController : MonoBehaviour
         StartCoroutine(RecoilCor(magnitude, duration));
     }
 
+    public Quaternion originalRotation;
     private IEnumerator RecoilCor(float angle, float duration)
     {
+        isShaking = true;
+
+        // originalRotation = transform.localRotation;
+        Quaternion lerpedRotation = Quaternion.identity;
+
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
-            float progress = elapsedTime / duration;
-            float recoilAngleThisFrame = Mathf.Lerp(0f, angle, progress);
-            _mainCam.transform.localRotation = originalCameraRotation * Quaternion.Euler(-recoilAngleThisFrame, 0f, 0f);
+            float pingPongValue = Mathf.PingPong(elapsedTime * 2f, 1f);
+            float lerpedAngle = Mathf.Lerp(0f, angle, pingPongValue);
+
+            lerpedRotation = originalRotation * Quaternion.AngleAxis(lerpedAngle, Vector3.left);
+
+            UpdateCameraPositionRotation(null, lerpedRotation);
+            // transform.localRotation = lerpedRotation;
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        _mainCam.transform.localRotation = originalCameraRotation;
+        transform.localRotation = originalRotation;
+        isShaking = false;
     }
+
 
     #endregion
 
