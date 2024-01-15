@@ -55,18 +55,20 @@ public class CameraController : MonoBehaviour
         Quaternion lerpedRotation = Quaternion.identity;
 
         float elapsedTime = 0f;
+        float pingPongValue = 0;
+        float lerpedAngle = 0f;
 
         while (elapsedTime < duration)
         {
-            float pingPongValue = Mathf.PingPong(elapsedTime * 2f, 1f);
-            float lerpedAngle = Mathf.Lerp(0f, angle, pingPongValue);
+            elapsedTime += Time.deltaTime;
+
+            pingPongValue = Mathf.PingPong(elapsedTime * 2f, 1f);
+            lerpedAngle = Mathf.Lerp(0f, angle, pingPongValue);
 
             lerpedRotation = originalRotation * Quaternion.AngleAxis(lerpedAngle, Vector3.left);
 
             UpdateCameraPositionRotation(null, lerpedRotation);
-            // transform.localRotation = lerpedRotation;
 
-            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
@@ -105,13 +107,13 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator AimChangeAnim(float targetValue, float speed)
     {
-        float moveTime = 0;
+        float elapsedTime = 0;
         float value = 0;
 
         while (true)
         {
-            moveTime += Time.deltaTime;
-            value = moveTime / speed;
+            elapsedTime += Time.deltaTime;
+            value = elapsedTime / speed;
 
             _mainCam.fieldOfView = Mathf.Lerp(_mainCam.fieldOfView, targetValue, value);
 

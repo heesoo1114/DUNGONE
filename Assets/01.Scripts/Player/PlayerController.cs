@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public bool IsAiming => _cameraController.IsAiming;
     public bool IsShooting => _playerAttack.IsShooting;
     public bool IsReloading => _playerAttack.IsRealoding;
+    public bool IsAlive => _playerHealth.IsAlive;
 
     private void Awake()
     {
@@ -25,9 +27,14 @@ public class PlayerController : MonoBehaviour
         _cameraController = FindObjectOfType<CameraController>();
     }
 
+    private void OnEnable()
+    {
+        GameManager.Instance.SetPlayerController(this);
+    }
+
     private void Start()
     {
-        _playerHealth.playerDieEvent += BlockInput;
+        _playerHealth.OnPlayerDieEvent += BlockInput;
 
         // Movement Input
         _inputReader.MovementEvent += _playerMovement.SetMovement;
@@ -51,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _playerHealth.playerDieEvent -= BlockInput;
+        _playerHealth.OnPlayerDieEvent -= BlockInput;
 
         // Movement Input
         _inputReader.MovementEvent -= _playerMovement.SetMovement;
@@ -70,6 +77,12 @@ public class PlayerController : MonoBehaviour
         _inputReader.EndAimEvent -= _playerMovement.SetNormalMovement;
 
         _inputReader.DeactivateInput();
+    }
+
+    public void RecieveInput()
+    {
+        // 입력 활성화
+        _inputReader.ActivateInput();
     }
 
     public void BlockInput()

@@ -3,7 +3,7 @@ using System;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    public Action playerDieEvent;
+    public event Action OnPlayerDieEvent;
 
     [Header("Health")]
     [SerializeField] private int maxHealth = 100;
@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        IsAlive = true;
         currentHealth = maxHealth;
         _healthBarUI.SettingRatio(maxHealth);
     }
@@ -35,8 +36,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             Debug.Log("Player Die");
 
             IsAlive = false;
-            playerDieEvent.Invoke();
+            OnPlayerDieEvent.Invoke();
             MakeSound(dieSound);
+
+            GameManager.Instance.OnGameDone();
         }
         else
         {

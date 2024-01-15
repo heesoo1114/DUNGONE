@@ -285,7 +285,7 @@ Transform:
   - {fileID: 4192881032052274434}
   - {fileID: 87222781937835096}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8628586074658874276
 NavMeshAgent:
@@ -297,7 +297,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -355,7 +355,7 @@ MonoBehaviour:
   eyeSight: 10
   attackDamage: 7
   attackCoolTime: 2
-  attackRange: 3.6
+  attackRange: 3.7
 --- !u!1 &5603647541636920581
 GameObject:
   m_ObjectHideFlags: 0

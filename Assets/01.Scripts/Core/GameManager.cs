@@ -1,43 +1,72 @@
+using System;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>   
 {
-    public static GameManager Instance = null;
-    public GameObject Player;
+    [SerializeField] private PoolingListSO _poolingListSO;
 
-    [SerializeField] private PoolingListSO _poolingList;
+    public PlayerController PlayerController { get; private set; }
+
+    public event Action<bool> OnGameDoneEvent;
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.Log("Multiple Gamemanager is running");
-        }
-        Instance = this;
-
         PoolManager.Instance = new PoolManager(transform);
         CreatePool();
 
-        LockCursor();
+        UIManager.Instance.SetCursor();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnGameDone();
+        }
+    }
+
+    // 플레이어가 죽었을 때 or 플레이어가 게임을 클리어 하였을 때
+    // 해당 함수를 실행시키자.
+    public void OnGameDone()
+    {
+        bool isPositive = PlayerController.IsAlive;
+        OnGameDoneEvent?.Invoke(isPositive);
     }
 
     private void CreatePool()
     {
-        _poolingList.PoolList.ForEach(p =>
+        _poolingListSO.PoolList.ForEach(p =>
         {
             PoolManager.Instance.CreatePool(p.Prefab, p.Count);
         });
     }
 
-    private void LockCursor()
+    public void SetPlayerController(PlayerController playerController)
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        PlayerController = playerController;
     }
-    
-    private void ShowCursor()
+
+    public void RecievePlayerInput()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        PlayerController?.RecieveInput();
+    }
+
+    public void BlockPlayerInput()
+    {
+        PlayerController?.BlockInput();
+    }
+
+    public void SetTimeScale(float timeScale)
+    {
+        Time.timeScale = timeScale;
+    }
+
+    public void CloseGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); 
+#endif
     }
 }

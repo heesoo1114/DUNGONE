@@ -74,7 +74,7 @@ AudioSource:
   m_GameObject: {fileID: 1300958119534718455}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8098033307880470488, guid: 282fd829930c49e4ba2f539b79b7a512, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -276,7 +276,7 @@ Transform:
   - {fileID: 7290660316683987821}
   - {fileID: 2769276473052561089}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &5684494315139161364
 CharacterController:
@@ -379,10 +379,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8c45a232b9c6b40a470d6fdd3a0d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotXSpeed: 4
-  rotYSpeed: 4
-  limitMinX: -35
-  limitMaxX: 70
+  rotXSpeed: 3
+  rotYSpeed: 3
+  limitMinX: -30
+  limitMaxX: 50
   camPos: {fileID: 2236560939084262396}
 --- !u!114 &5216001008576250684
 MonoBehaviour:
@@ -398,8 +398,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzleTr: {fileID: 7605762946958116637}
   sendDamage: 10
-  shakeMagnitude: 15
-  shakeDuration: 0.3
+  shakeMagnitude: 2
+  shakeDuration: 0.1
   maxAmmo: 30
   reloadDealtyTime: 2.3
   _currentAmmoText: {fileID: 0}
@@ -417,8 +417,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 3881780319005581874}
     m_Modifications:
     - target: {fileID: 3654636829036959428, guid: 9257c321827984e4099d3cf100b64fcc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0000002384186
+      objectReference: {fileID: 0}
+    - target: {fileID: 3654636829036959428, guid: 9257c321827984e4099d3cf100b64fcc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1295
+      value: 0.12949991
+      objectReference: {fileID: 0}
+    - target: {fileID: 3654636829036959428, guid: 9257c321827984e4099d3cf100b64fcc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.50530005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3654636829036959428, guid: 9257c321827984e4099d3cf100b64fcc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9975641
+      objectReference: {fileID: 0}
+    - target: {fileID: 3654636829036959428, guid: 9257c321827984e4099d3cf100b64fcc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.06975647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3654636829036959428, guid: 9257c321827984e4099d3cf100b64fcc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8445401694592989334, guid: 9257c321827984e4099d3cf100b64fcc, type: 3}
       propertyPath: m_Name

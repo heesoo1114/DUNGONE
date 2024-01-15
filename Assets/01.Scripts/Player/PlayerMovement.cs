@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
