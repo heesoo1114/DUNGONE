@@ -46,7 +46,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 6
+  m_Speed: 7
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -96,12 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b0af7b28277ba4692a29476de450f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 30
   dissolveAnimationSpeed: 3
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  eyeSight: 15
+  eyeSight: 7.5
   attackDamage: 10
   attackCoolTime: 2.5
   attackRange: 3.35
