@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using System;
-using UnityEngine.Rendering;
 
 public class MonsterController : MonoBehaviour, IDamageable
 {
@@ -26,7 +25,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     [Header("Effect")]
     [SerializeField] private float dissolveAnimationSpeed = 2f;
     private Material dissolveMaterial;
-    private float offDissolveValue = 0;
+    // private float offDissolveValue = 0;
     private float onDissolveValue = 1;
 
     #endregion

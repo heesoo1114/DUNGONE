@@ -17,20 +17,11 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.SetCursor();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            OnGameDone();
-        }
-    }
-
-    // 플레이어가 죽었을 때 or 플레이어가 게임을 클리어 하였을 때
-    // 해당 함수를 실행시키자.
     public void OnGameDone()
     {
         bool isPositive = PlayerController.IsAlive;
         OnGameDoneEvent?.Invoke(isPositive);
+        BlockPlayerInput();
     }
 
     private void CreatePool()

@@ -41,9 +41,13 @@ public class SettingPopupUI : PopUpUI
         sfxMusicToggle.onValueChanged.AddListener(SetSfxSoundMute);
     }
 
-    public override void ShowUI()
+    private void Start()
     {
         LoadVolumeData();
+    }
+
+    public override void ShowUI()
+    {
         base.ShowUI();
     }
 
@@ -51,7 +55,6 @@ public class SettingPopupUI : PopUpUI
     {
         base.CloseUI();
         SaveVolumeData();
-
         UIManager.Instance.ShowCursor();
     }
 

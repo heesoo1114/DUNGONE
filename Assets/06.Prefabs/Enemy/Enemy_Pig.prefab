@@ -219,7 +219,7 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  eyeSight: 8
+  eyeSight: 13
   attackDamage: 5
   attackCoolTime: 1.5
   attackRange: 2.8
