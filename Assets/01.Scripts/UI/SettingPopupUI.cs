@@ -54,8 +54,8 @@ public class SettingPopupUI : PopUpUI
     public override void CloseUI()
     {
         base.CloseUI();
-        SaveVolumeData();
         UIManager.Instance.ShowCursor();
+        SaveVolumeData();
     }
 
     private void SaveVolumeData()
